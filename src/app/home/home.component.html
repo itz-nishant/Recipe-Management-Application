@@ -1,0 +1,47 @@
+<app-navbar></app-navbar>
+
+<div class="home-container">
+  <h2 class="home-heading">Recipes</h2>
+  <p class="home-subheading">Discover Delicious Recipes</p>
+
+  <div>
+    <input type="text" placeholder="Search recipes" [formControl]="searchControl" class="search-input">
+    <mat-icon class="search-icon">search</mat-icon>
+  </div>
+
+  <div class="sort-dropdown-container">
+    <span class="sort-dropdown-label">Sort by:</span>
+    <p-dropdown [options]="sortOptions" [(ngModel)]="selectedSortOption" (onChange)="onSortOptionChange()"
+      class="sort-dropdown"></p-dropdown>
+  </div>
+
+  <div class="recipe-card-container">
+    <div *ngIf="recipes.length === 0; else recipeCards" class="no-results-message">
+     <h1> No search results found.</h1>
+    </div>
+    <ng-template #recipeCards>
+      <div *ngFor="let recipe of recipes | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }" class="recipe-card">
+        <img [src]="recipe.imageUrl" alt="{{ recipe.title }}" class="recipe-image" *ngIf="recipe.imageUrl">
+
+        <div class="recipe-details">
+          <h3 class="recipe-title">{{ recipe.title }}</h3>
+          <p class="recipe-description">{{ recipe.description }}</p>
+        </div>
+
+        <div class="recipe-actions">
+          <div class="buttons">
+            <button pButton [icon]="recipe.isFavorite ? 'pi pi-heart-fill' : 'pi pi-heart'" (click)="toggleFavorite(recipe)"
+            class="favorite-button"></button>
+          <button pButton icon="pi pi-pencil" [routerLink]="['/recipe/edit', recipe.id]"
+            class="edit-recipe-button"></button>
+          <button pButton icon="pi pi-trash" (click)="deleteRecipe(recipe.id)" class="delete-recipe-button"></button>
+          </div>
+          <button pButton label="View Details" [routerLink]="['/recipe', recipe.id]" class="view-recipe-button"></button>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+  <div *ngIf="recipes.length > 0" class="pagination-controls">
+    <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
+  </div>
+</div>

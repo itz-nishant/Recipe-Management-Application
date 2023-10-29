@@ -1,0 +1,37 @@
+<app-navbar></app-navbar>
+<div class="favorites-container">
+  <h2 class="favorites-heading">Favorite Recipes</h2>
+  <div class="recipe-card-container">
+    <div *ngIf="favoriteRecipes$ | async as favoriteRecipes; else loading">
+      <div *ngIf="favoriteRecipes.length > 0; else noFavorites">
+        <div class="recipe-card-columns">
+          <div
+            *ngFor="let recipe of favoriteRecipes | paginate: { itemsPerPage: 3, currentPage: currentPage, totalItems: favoriteRecipes.length }"
+            class="p-card">
+            <img [src]="recipe.imageUrl" alt="{{ recipe.title }}" class="recipe-image" />
+
+            <div class="p-card-body recipe-details">
+              <h3 class="p-card-title recipe-title">{{ recipe.title }}</h3>
+              <p class="p-card-subtitle recipe-description">{{ recipe.description }}</p>
+            </div>
+
+            <div class="p-card-footer">
+              <button pButton icon="pi pi-times" (click)="removeFromFavorites(recipe)"
+                class="delete-recipe-button p-button-rounded p-button-secondary"></button>
+              <button pButton label="View Details" [routerLink]="['/recipe', recipe.id]"
+                class="view-recipe-button p-button-secondary"></button>
+            </div>
+          </div>
+        </div>
+
+        <pagination-controls (pageChange)="currentPage = $event" class="pagination-controls"></pagination-controls>
+      </div>
+      <ng-template #noFavorites>
+        <p class="no-favorites-message">No Favorite Recipes Found.</p>
+      </ng-template>
+    </div>
+    <ng-template #loading>
+      <p>Loading...</p>
+    </ng-template>
+  </div>
+</div>

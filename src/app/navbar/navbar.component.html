@@ -1,0 +1,16 @@
+<header>
+    <nav>
+        <div class="navbar-left">
+            <a class="logo">Recipe Management</a>
+        </div>
+        <div class="navbar-right">
+            <a class="navilinks" routerLink="/home" [routerLinkActiveOptions]="{ exact: true }"
+                routerLinkActive="active"> Home</a>
+            <a class="navilinks" routerLink="/recipe/add" routerLinkActive="active">Add Recipe</a>
+            <a class="navilinks" routerLink="/favorites" routerLinkActive="active">Favourites</a>
+
+            <p-menubar [model]="items"></p-menubar>
+        </div>
+    </nav>
+    <div class="underline w-100"></div>
+</header>

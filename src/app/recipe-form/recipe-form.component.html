@@ -1,0 +1,49 @@
+<app-navbar></app-navbar>
+
+<div class="recipe-form-container">
+  <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()" class="recipe-form">
+    <h2 class="recipe-form-heading">{{ editMode ? 'Edit Recipe' : 'Add Recipe' }}</h2>
+
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input type="text" id="title" formControlName="title" pInputText class="input" placeholder="Title" />
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <input type="text" id="description" formControlName="description" pInputText class="input"
+        placeholder="Description" />
+    </div>
+
+    <div formArrayName="ingredients">
+      <label for="ingredients">Ingredients</label>
+      <div class="form-group" *ngFor="let ingredient of ingredients.controls; let i=index">
+        <div class="ingredient-item">
+          <input type="text" [formControlName]="i" pInputText class="input" placeholder="Ingredient" />
+          <button pButton icon="pi pi-times" class="remove-ingredient-button" (click)=" onRemoveIngredient(i)"></button>
+        </div>
+      </div>
+    </div>
+    <button pButton type="button" label="Add Ingredient" (click)="onAddIngredient()"
+      class="p-button-raised add-ingredient-button"></button>
+
+    <div class="form-group">
+      <label for="instructions">Instructions</label>
+      <textarea id="instructions" formControlName="instructions" pInputTextarea class="input"
+        placeholder="Write instructions"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="imageUrl">Image URL</label>
+      <input type="text" id="imageUrl" formControlName="imageUrl" pInputText class="input"
+        placeholder="images.google.com" />
+    </div>
+
+    <div *ngIf="recipeForm.get('imageUrl')?.value" class="image-preview">
+      <img [src]="recipeForm.get('imageUrl')?.value" alt="Image Preview" class="preview-image" />
+    </div>
+
+    <button pButton type="submit" [label]="editMode ? 'Update Recipe' : 'Add Recipe'" [disabled]="!recipeForm.valid"
+      class="p-button-raised add-recipe-button"></button>
+  </form>
+</div>

@@ -1,0 +1,20 @@
+<app-navbar></app-navbar>
+
+<div class="recipe-detail-container">
+  <img [src]="recipe?.imageUrl || 'placeholder-image-url'" alt="{{ recipe?.title }}" class="recipe-detail-image" />
+
+  <div class="recipe-details">
+    <h2 class="recipe-detail-heading">Recipe Details</h2>
+    <h3 class="recipe-detail-title">{{ recipe?.title }}</h3>
+    <h3 class="recipe-detail-heading">Description</h3>
+    <p class="recipe-detail-description">{{ recipe?.description }}</p>
+
+    <h3 class="recipe-detail-heading">Ingredients</h3>
+    <ul class="recipe-detail-ingredients">
+      <li *ngFor="let ingredient of recipe?.ingredients">{{ ingredient }}</li>
+    </ul>
+
+    <h3 class="recipe-detail-heading">Instructions</h3>
+    <p class="recipe-detail-instructions">{{ recipe?.instructions }}</p>
+  </div>
+</div>
